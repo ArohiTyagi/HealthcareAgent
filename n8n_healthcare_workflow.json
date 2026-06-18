@@ -1,0 +1,153 @@
+{
+  "name": "Multi-Agent Healthcare Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "<img src=\"file:///c:/Users/Arohi%20Tyagi/OneDrive/Desktop/api/abes_logo.png\" width=\"150\" />",
+        "height": 120,
+        "width": 180
+      },
+      "id": "abes-logo-sticky-node",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [400, 100]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "analyze-symptoms",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "31b268f7-b2f6-455b-801e-cd8d8f80cb52",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "model": "llama3",
+        "baseUrl": "http://localhost:11434"
+      },
+      "id": "e674b7f8-9844-486a-aa84-b49eb127c5bb",
+      "name": "Ollama Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [400, 500]
+    },
+    {
+      "parameters": {
+        "prompt": "=You are an experienced healthcare assistant. You understand common symptoms and explain them clearly without creating panic.\n\nAnalyze the following symptoms carefully:\n{{ $('Webhook').item.json.body.symptoms }}\n\nMention:\n- possible common causes\n- likely conditions\n- simple explanation\n\nKeep response short and calm."
+      },
+      "id": "0df8bba2-581d-40ba-81f1-332a6f238af1",
+      "name": "Symptom Analyzer",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "=You provide beginner-friendly health advice, hydration tips, rest recommendations, food suggestions, and precautions.\n\nGive healthcare advice for:\n{{ $('Webhook').item.json.body.symptoms }}\n\nInclude:\n- hydration advice\n- food suggestions\n- rest recommendations\n- precautions\n\nKeep response simple and beginner-friendly."
+      },
+      "id": "5faee8da-b924-4f81-807d-07548b809d4c",
+      "name": "Health Advisor",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "=You are responsible for patient safety. You calmly identify emergency symptoms and recommend doctor consultation when needed.\n\nCheck whether these symptoms need urgent medical attention:\n{{ $('Webhook').item.json.body.symptoms }}\n\nMention:\n- warning signs\n- emergency symptoms\n- doctor consultation if needed\n\nAvoid creating panic."
+      },
+      "id": "b1bcfb46-bb11-45cd-a9f6-ec61962325cb",
+      "name": "Safety Checker",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "=You are a Response Formatter. You organize healthcare responses into a clean, structured and readable format.\n\nCreate a final healthcare response using all previous analyses.\n\nSymptom Analysis:\n{{ $('Symptom Analyzer').item.json.text }}\n\nHealthcare Advice:\n{{ $('Health Advisor').item.json.text }}\n\nSafety Check:\n{{ $('Safety Checker').item.json.text }}\n\nStructure:\n1. Symptom Analysis\n2. Healthcare Advice\n3. Safety Check\n4. Medical Disclaimer\n\nKeep it clean and readable."
+      },
+      "id": "2d1bc0b9-5091-447f-8d96-85fc848fde8a",
+      "name": "Response Formatter",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Symptom Analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Symptom Analyzer": {
+      "main": [
+        [
+          {
+            "node": "Health Advisor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Health Advisor": {
+      "main": [
+        [
+          {
+            "node": "Safety Checker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Safety Checker": {
+      "main": [
+        [
+          {
+            "node": "Response Formatter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Symptom Analyzer",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Health Advisor",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Safety Checker",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Response Formatter",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

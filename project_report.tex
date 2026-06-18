@@ -1,0 +1,325 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+% ================= TITLE PAGE =================
+\begin{titlepage}
+    \begin{center}
+        \vspace*{1cm}
+        
+        \textbf{\Large A PROJECT REPORT}\\
+        \textbf{\Large ON}
+        
+        \vspace{1.5cm}
+        
+        \textbf{\LARGE AI-Powered Healthcare Chatbot System using Multi-Agent Architecture}
+        
+        \vspace{2cm}
+        
+        \textit{Submitted in partial fulfillment of the requirements for the award of the degree of}
+        
+        \vspace{0.5cm}
+        
+        \textbf{\Large MASTER OF COMPUTER APPLICATIONS}
+        
+        \vspace{1.5cm}
+        
+        \textit{Submitted by} \\
+        \vspace{0.3cm}
+        \textbf{Arohi Tyagi} \\
+        \textbf{Roll No: 2503201450031}
+        
+        \vspace{2cm}
+        
+        \textit{Under the Guidance of}
+        
+        \vspace{0.5cm}
+        \begin{minipage}{0.4\textwidth}
+            \begin{center}
+                \textbf{Priya Mishra} \\
+                Assistant Professor (Sr. Scale)
+            \end{center}
+        \end{minipage}
+        \hfill
+        \begin{minipage}{0.4\textwidth}
+            \begin{center}
+                \textbf{Alpana Lodhi} \\
+                Assistant Professor
+            \end{center}
+        \end{minipage}
+        
+        \vfill
+        
+        \includegraphics[width=0.6\textwidth]{abes_logo.png} \\
+        \vspace{0.5cm}
+        
+        \textbf{\Large DEPARTMENT OF MASTER OF COMPUTER APPLICATIONS} \\
+        \vspace{0.2cm}
+        \textbf{\Large ABES ENGINEERING COLLEGE, GHAZIABAD} \\
+        \vspace{0.2cm}
+        \textbf{Affiliated to Dr. A.P.J. Abdul Kalam Technical University, Lucknow} \\
+        \vspace{0.2cm}
+        \textbf{Academic Session: 2025–26}
+        
+    \end{center}
+\end{titlepage}
+
+% ================= TABLE OF CONTENTS =================
+\tableofcontents
+\newpage
+
+% ================= CHAPTER 1: INTRODUCTION =================
+\chapter{Introduction}
+In recent years, Artificial Intelligence (AI) has shifted from simple pattern recognition to active decision-making agents capable of executing multi-step tasks. In the domain of healthcare and medical advice, traditional symptom checkers are highly static and rule-based, often leading to unverified information and panic.
+
+\section{Problem Statement}
+Traditional health information retrieval represents a highly fragmented and cognitively demanding process for modern consumers. To understand an ailment, an individual is typically required to traverse multiple independent web platforms to cross-reference symptoms, diet plans, and safety advisories. This disjointed procedure introduces several critical problems:
+\begin{itemize}
+    \item \textbf{Information Fragmentation:} Essential details regarding symptoms, home remedies, and emergency warnings reside on isolated systems, requiring users to manually compile the information.
+    \item \textbf{Symptom Panic:} Static symptom checkers frequently jump to extreme diagnoses without providing calm, context-aware analysis.
+    \item \textbf{Scattering of Safety Information:} Patients frequently struggle to differentiate between symptoms requiring simple rest and those requiring urgent emergency consultation.
+    \item \textbf{Lack of Personalization:} Automated medical blogs provide generic recommendations that ignore the specific nuances of a user's prompt.
+\end{itemize}
+This project directly addresses these challenges by developing a consolidated interface that automates symptom analysis, processes health advice, and generates a personalized, unified, and safe medical report.
+
+\section{Scope of the Project}
+The scope of this project encompasses the design, implementation, and deployment of a multi-agent AI orchestration pipeline paired with a lightweight web user interface. Specifically, the scope covers:
+\begin{itemize}
+    \item \textbf{Symptom Analysis:} Development of a specialized agent capable of safely interpreting user symptoms and finding likely common causes.
+    \item \textbf{Health and Wellness Advice:} Provision of actionable hydration, food, and rest recommendations tailored to the symptoms.
+    \item \textbf{Safety Recommendations:} Provision of critical safety checks to recommend doctor consultations when emergency warning signs are detected.
+    \item \textbf{CrewAI Orchestration:} Implementation of a Python-based production pipeline employing role-playing agents and customized local model interfaces.
+    \item \textbf{n8n Prototype Workflow:} Creation of a node-based visual prototype workflow to evaluate webhook routing, API scheduling, and low-code orchestration models.
+    \item \textbf{Streamlit User Interface:} A single-page pythonic web dashboard allowing users to input symptoms and receive a generated response.
+    \item \textbf{Local LLM Execution:} Configuration of Ollama to serve the Llama 3 model locally, helping reduce operational costs and supporting extreme user data privacy (crucial for medical data).
+\end{itemize}
+
+\section{Advantages of the Proposed System}
+Compared to traditional methods, the proposed system provides several distinct operational advantages:
+\begin{itemize}
+    \item \textbf{Automation of Synthesis:} Automates the compilation of symptom analysis, health advice, and safety guides into a single report.
+    \item \textbf{Local AI Data Privacy:} By running model inference locally via Ollama, user symptoms and private health queries are never transmitted to third-party AI companies.
+    \item \textbf{Low-Cost Operation:} Utilizes local compute resources.
+    \item \textbf{Modular Multi-Agent System:} Decomposes the complex reasoning tasks into specialized agents (Analyst, Advisor, Safety Officer), improving reliability.
+\end{itemize}
+
+\section{Limitations of Existing Systems}
+Existing online symptom checkers have several core limitations that this project aims to overcome:
+\begin{itemize}
+    \item \textbf{Expensive Cloud APIs:} Standard cloud-based AI tools incur high per-token costs and risk exposing protected health information (PHI).
+    \item \textbf{Rigid Rule-Based Checkers:} Traditional directory services rely on decision trees rather than conversational reasoning.
+\end{itemize}
+
+\section{Core Technologies Used}
+The architecture of this project is based on the following core open-source frameworks:
+\begin{itemize}
+    \item \textbf{CrewAI:} A pythonic framework that orchestrates role-playing AI agents, defining their processes and memory parameters.
+    \item \textbf{Ollama:} A tool for running LLMs locally (e.g. Llama 3) on standard consumer hardware, supporting data privacy.
+    \item \textbf{Streamlit:} A fast, python-based web interface framework used to build the front-end application.
+    \item \textbf{LangChain:} Provides structural wrappers to bind local LLMs.
+    \item \textbf{n8n:} A node-based workflow automation tool used to visually design, deploy, and monitor the sequential multi-agent execution pipeline.
+\end{itemize}
+
+% ================= CHAPTER 2: REQUIREMENTS =================
+\chapter{Requirements Analysis}
+This chapter specifies the hardware components and software environments required to execute the multi-agent system and the web application interface.
+
+\section{Hardware Requirements}
+Running LLMs locally requires adequate CPU cores and system RAM to ensure fast token generation and prevent out-of-memory crashes.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Component} & \textbf{Minimum Specification} & \textbf{Recommended Specification} \\ \hline
+Processor & Intel Core i5 / Ryzen 5 (4 Cores) & Intel Core i7 / Ryzen 7 (8 Cores) \\ \hline
+System RAM & 8 GB DDR4 & 16 GB DDR4/DDR5 \\ \hline
+Storage Space & 5 GB Free SSD Storage & 10 GB Free SSD Storage \\ \hline
+Graphics & Shared Integrated Graphics & Dedicated GPU (4GB VRAM minimum) \\ \hline
+\end{tabular}
+\caption{Hardware Configuration Specifications}
+\end{table}
+
+\section{Software Requirements}
+The software stack consists of the Python execution environment, local LLM serving tools, and remote API dependencies.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Software Tool} & \textbf{Version / Type} & \textbf{Purpose} \\ \hline
+Operating System & Windows 10 / 11 (64-bit) & Primary execution host \\ \hline
+Python Environment & Version 3.10 / 3.11 & Backend language run-time \\ \hline
+Ollama Framework & Version 0.1.48+ & Serving local Llama 3 models \\ \hline
+n8n Framework & Version 1.0+ & Workflow visualization and webhook API \\ \hline
+Streamlit Library & Version 1.30.0+ & Front-end web dashboard \\ \hline
+CrewAI & Current Version & Multi-Agent orchestration \\ \hline
+VS Code / Git & Current Versions & Source editing and version control \\ \hline
+\end{tabular}
+\caption{Software Configuration Specifications}
+\end{table}
+
+% ================= CHAPTER 3: METHODOLOGY =================
+\chapter{Methodology}
+The system methodology outlines how Ollama serves the local LLM, how CrewAI orchestrates Python-based agents, how Streamlit renders the user interface, and how n8n manages visual nodes.
+
+\section{System Architecture}
+The system architecture coordinates the user input flow, frontend UI execution, and agentic reasoning pipeline. 
+
+\begin{verbatim}
+User Input
+    |
+    v
+Streamlit Interface
+    |
+    v
+CrewAI Orchestrator
+    |
+    +-----------------------------------------------+
+    |                       |                       |
+    v                       v                       v
+Symptom Analyst      Health Advisor        Safety Officer
+(Analysis Logic)     (Wellness Logic)      (Safety Checks)
+    |                       |                       |
+    +-----------------------------------------------+
+    |
+    v
+Communications Specialist
+    |
+    v
+Final Healthcare Report
+\end{verbatim}
+
+\section{Agent Roles and Responsibilities}
+To achieve high modularity and improve the reliability of generated recommendations, the system relies on specialized role-playing agents:
+\begin{itemize}
+    \item \textbf{Medical Symptom Analyst:} Analyzes symptoms and explains them clearly without creating panic.
+    \item \textbf{Health \& Wellness Advisor:} Provides beginner-friendly health advice, hydration tips, rest recommendations, and food suggestions.
+    \item \textbf{Patient Safety Officer:} Calmly identifies emergency symptoms and recommends doctor consultation when needed.
+    \item \textbf{Medical Communications Specialist:} Organizes healthcare responses into a clean, structured and readable format, appending a medical disclaimer.
+\end{itemize}
+
+\section{Local LLM Serving via Ollama and CrewAI}
+Ollama hosts the Llama 3 model locally. To integrate it securely and prevent validation errors, the system utilizes CrewAI's native \texttt{LLM} class pointing to the local endpoint (\texttt{http://localhost:11434}).
+
+\begin{lstlisting}[language=Python, caption=CrewAI Native LLM Initialization]
+from crewai import LLM
+
+# Using CrewAI's native LLM integration for Ollama
+llm = LLM(
+    model="ollama/llama3", 
+    base_url="http://localhost:11434"
+)
+\end{lstlisting}
+
+\section{Streamlit Front-End Web Application}
+The frontend interface consists of a chat-based layout on the main page. The code uses \texttt{crew.kickoff()} to trigger the backend multi-agent pipeline, featuring loading animation overlays and session-state caching.
+
+\begin{lstlisting}[language=Python, caption=Streamlit Execution Logic]
+if user_input := st.chat_input("Enter Symptoms or Health Question..."):
+    # Process with CrewAI
+    with st.chat_message("assistant"):
+        with st.spinner("Analyzing symptoms using CrewAI..."):
+            try:
+                final_result = healthcare_crew.kickoff(inputs={"symptoms": user_input})
+                final_response = str(final_result) + "\n\n---\n**DISCLAIMER:** Consult a doctor."
+                st.markdown(final_response)
+                st.session_state.messages.append({"role": "assistant", "content": final_response})
+            except Exception as e:
+                st.error(f"Error: {e}")
+\end{lstlisting}
+
+\section{Additional Prototype Implementation Using n8n}
+In addition to the primary Python-based CrewAI architecture, a secondary prototype was implemented using the n8n visual workflow automation tool. The visual workflow is connected as follows:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{n8n_workflow.png}
+    \caption{n8n Visual Workflow Node Configuration Canvas}
+    \label{fig:n8n_workflow}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{Webhook Trigger:} Listens for incoming POST requests containing a JSON body payload with symptoms.
+    \item \textbf{Symptom Analyzer:} A LangChain node connected to the Ollama Chat Model.
+    \item \textbf{Health Advisor:} A LangChain node that evaluates the previous responses.
+    \item \textbf{Safety Checker:} A LangChain node that ensures safety compliance.
+    \item \textbf{Response Formatter:} Consolidates outputs from all preceding agents into the final JSON response returned to the webhook.
+\end{enumerate}
+
+% ================= CHAPTER 4: FUTURE SCOPE =================
+\chapter{Future Scope}
+The current implementation establishes a solid base for local, multi-agent healthcare coordination. However, the system's capabilities can be expanded in several ways:
+\begin{itemize}
+    \item \textbf{Live Clinic Integrations:} Connecting the agents to clinic mapping APIs to recommend nearby hospitals during an emergency.
+    \item \textbf{Voice Assistant Integration:} Adding speech-to-text (e.g. Whisper) to allow users to verbally describe symptoms.
+    \item \textbf{Mobile Application Development:} Packaging the system as a mobile app (using Flutter) would make it accessible on the go.
+    \item \textbf{Cloud Deployment with GPU:} Transitioning from localhost to a secure, HIPAA-compliant cloud infrastructure with dedicated GPUs for faster token generation.
+\end{itemize}
+
+% ================= CHAPTER 5: CONCLUSION =================
+\chapter{Conclusion}
+This project successfully demonstrates the design, implementation, and deployment of an AI-Powered Healthcare Chatbot System using a Multi-Agent architecture. By dividing the planning process among specialized, collaborative agents, the system generates comprehensive, verified health analyses while improving reliability and structure.
+
+\section{Project Objectives Achieved}
+The primary objective of this project was to automate the compilation of symptom analyses, wellness routines, and emergency safety checks into a cohesive, user-friendly document. This was met through:
+\begin{itemize}
+    \item Generating highly personalized analyses tailored to user inputs.
+    \item Enforcing strict safety checks by a dedicated Patient Safety Officer agent.
+    \item Operating completely locally via Ollama to guarantee absolute data privacy for sensitive health queries.
+\end{itemize}
+The implementation proved that consumer-grade hardware is fully capable of driving multi-agent reasoning tasks, creating a polished, application-grade experience.
+
+% ================= BIBLIOGRAPHY =================
+\begin{thebibliography}{9}
+\bibitem{crewai} 
+CrewAI Team, \textit{CrewAI: Orchestrating Role-Playing Autonomous AI Agents}, Official Documentation. URL: \url{https://docs.crewai.com}
+
+\bibitem{ollama} 
+Ollama Project, \textit{Ollama: Get Up and Run Llama Locally}, Official Website. URL: \url{https://ollama.com}
+
+\bibitem{langchain} 
+Harrison Chase, \textit{LangChain: Building Applications with LLMs through Composability}, GitHub Repository. URL: \url{https://github.com/langchain-ai/langchain}
+
+\bibitem{streamlit} 
+Streamlit Inc., \textit{Streamlit Documentation}. URL: \url{https://docs.streamlit.io}
+
+\bibitem{n8n} 
+n8n.io, \textit{n8n: Fair-code Workflow Automation Tool}. URL: \url{https://docs.n8n.io}
+\end{thebibliography}
+
+\end{document}
